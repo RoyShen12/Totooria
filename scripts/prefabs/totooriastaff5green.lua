@@ -150,7 +150,7 @@ local function fn()
 
   inst:AddComponent("weapon")
   inst.components.weapon:SetDamage(60)
-  inst.components.weapon:SetRange(12, 14)
+  inst.components.weapon:SetRange(12, 18)
   --加入冰杖攻击音效2
   inst.components.weapon:SetProjectile("ice_projectile")
   inst.components.weapon:SetOnAttack(onattack)

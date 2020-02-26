@@ -45,24 +45,24 @@ local start_inv = {
   "goldnugget"
 }
 
-local function shuxing(inst) --升级自动加的属性
+local function GainOnLvup(inst) --升级自动加的属性
   local max_jiacheng = 20
   local jiacheng = math.min(inst.dengji, max_jiacheng)
   local sanity_percent = inst.components.sanity:GetPercent()
   inst.components.sanity.max = math.ceil(200 + jiacheng * 10) --400
   inst.components.sanity:SetPercent(sanity_percent)
   inst.components.sanity.dapperness = TUNING.DAPPERNESS_HUGE / 18 * jiacheng
-
+  -- 恢复 25% 生命
   inst.components.health:SetPercent(math.min(1, inst.components.health:GetPercent() + 0.25))
 end
 
 local MaxLevel = 2000
 
-local function shengji(inst)
+local function LevelUp(inst)
   if inst.dengji < MaxLevel then
     inst.dengji = inst.dengji + 1
     inst.jinengdian = inst.jinengdian + 3
-    shuxing(inst)
+    GainOnLvup(inst)
     inst.SoundEmitter:PlaySound("dontstarve/characters/wx78/levelup")
 
     if inst.dengji == 5 then
@@ -111,7 +111,7 @@ local function xidian(inst)
     inst.components.talker:Say(ttrstrs[9])
   else
     inst.dengji = inst.dengji - 5
-    shuxing(inst)
+    GainOnLvup(inst)
     inst.jinengdian = inst.dengji
     inst.xingyun = 0
     inst.gongjili = 0
@@ -189,8 +189,8 @@ local function xidian(inst)
 end
 
 local function onkilledother(inst, data)
-  if math.random() < .1 / inst.dengji then --打怪升级，几率是10%到0.5%
-    shengji(inst)
+  if math.random() < math.max(0.1 / inst.dengji, 0.001) then --打怪升级，1级的几率是10%，最小不小于0.1%
+    LevelUp(inst)
   end
 
   --根据幸运值打怪掉金币
@@ -211,11 +211,11 @@ end
 
 local function oneat(inst, food)
   if food and food.components.edible and food.prefab == "coral_brain" then --吃聪明豆必定升级
-    shengji(inst)
+    LevelUp(inst)
   elseif food and food.components.edible and food.prefab == "dragoonheart" then --吃龙人心洗点，惩罚是降低5级
     xidian(inst)
-  elseif math.random() < .1 / inst.dengji then --吃任何东西都有几率升级，几率是10%到0.5%
-    shengji(inst)
+  elseif math.random() < 0.1 / inst.dengji then --吃任何东西都有几率升级
+    LevelUp(inst)
   end
 end
 
@@ -265,7 +265,7 @@ local function onpreload(inst, data)
     inst.components.locomotor.walkspeed = 4 + inst.sudu / 20 * 2
     inst.components.locomotor.runspeed = 6 + inst.sudu / 20 * 3
 
-    shuxing(inst)
+    GainOnLvup(inst)
 
     if inst.dengji == 20 then
       inst:AddTag("teji_xuezhe")
@@ -316,7 +316,7 @@ local master_postinit = function(inst)
 
   inst.components.eater:SetOnEatFn(oneat)
 
-  shuxing(inst)
+  GainOnLvup(inst)
   -- Stats
   inst.components.health:SetMaxHealth(75)
   inst.components.hunger:SetMax(250)
