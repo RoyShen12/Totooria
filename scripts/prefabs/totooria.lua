@@ -189,20 +189,26 @@ local function xidian(inst)
 end
 
 local function onkilledother(inst, data)
-  if math.random() < math.max(0.1 / inst.dengji, 0.001) then --打怪升级，1级的几率是10%，最小不小于0.1%
+  --打怪升级，1级的几率是10%，最小不小于1%
+  if math.random() < math.max(0.1 / inst.dengji, 0.01) then
     LevelUp(inst)
   end
 
   --根据幸运值打怪掉金币
   local victim = data.victim
-  if victim.components.freezable or victim:HasTag("monster") then
-    if inst.xingyun > 1 then
-      victim.components.lootdropper:SpawnLootPrefab("dubloon")
+
+  if victim.components.lootdropper and (victim.components.freezable or victim:HasTag("monster")) then
+    if inst.xingyun > 2 then -- 幸运大于2，随机掉落 2-10 个金币
+      for _k = 1, math.random(2, 10) do
+        victim.components.lootdropper:SpawnLootPrefab("dubloon")
+      end
+    elseif inst.xingyun > 1 then
+      victim.components.lootdropper:SpawnLootPrefab("dubloon") -- 幸运大于1必定掉落1个金币
       if math.random() <= (inst.xingyun - 1) then
         victim.components.lootdropper:SpawnLootPrefab("dubloon")
       end
     else
-      if math.random() <= inst.xingyun and victim.components.lootdropper then
+      if math.random() <= inst.xingyun then
         victim.components.lootdropper:SpawnLootPrefab("dubloon")
       end
     end

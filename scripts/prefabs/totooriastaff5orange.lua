@@ -133,7 +133,7 @@ local function fn()
   inst.components.equippable:SetOnEquip(onequip)
   inst.components.equippable:SetOnUnequip(onunequip)
   --加速
-  inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT * 1.25
+  inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT * 1.45
   inst.components.equippable.dapperness = TUNING.CRAZINESS_MED / 4 * 3
 
   return inst
