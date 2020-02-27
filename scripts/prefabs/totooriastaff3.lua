@@ -18,8 +18,14 @@ local function onunequip(inst, owner)
 end
 
 local function onattack(inst, attacker, target)
+  -- 实际暴击率 = 5% + 幸运百分数/500。50%幸运=15%暴击；400%幸运=85%暴击; >475%幸运=满暴击；满暴击后击中恢复溢出暴击等值生命
+  local critChance = 20 * attacker.xingyun + 5
+  if critChance > 100 then
+    attacker.components.health:DoDelta(critChance - 100)
+    attacker.components.sanity:DoDelta(1)
+  end
   if target.components.combat then
-    if math.random(0, 100) > 95 then
+    if math.random(0, 100) > (100 - critChance) then
       target.components.combat:GetAttacked(attacker, 42 * 3, inst)
       attacker.components.talker:Say("触发 3 倍暴击！")
     end

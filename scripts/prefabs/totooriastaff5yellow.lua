@@ -50,9 +50,6 @@ local function onunequip(inst, owner)
 end
 
 local function onattack(inst, attacker, target)
-  if target.prefab == "twister" then
-  end
-
   --加入冰杖效果
   inst.SoundEmitter:PlaySound("dontstarve_DLC002/common/obsidian_wetsizzles")
 
@@ -75,8 +72,14 @@ local function onattack(inst, attacker, target)
     target:PushEvent("attacked", {attacker = attacker, damage = 0})
   end
 
+  -- 实际暴击率 = 5% + 幸运百分数/500。50%幸运=15%暴击；400%幸运=85%暴击; >475%幸运=满暴击；满暴击后击中恢复溢出暴击等值生命
+  local critChance = 20 * attacker.xingyun + 5
+  if critChance > 100 then
+    attacker.components.health:DoDelta(critChance - 100)
+    attacker.components.sanity:DoDelta(1)
+  end
   if target.components.combat then
-    if math.random(0, 100) > 92 then
+    if math.random(0, 100) > (100 - critChance) then
       -- target:PushEvent("attacked", { attacker = attacker, damage = 300 })
       target.components.combat:GetAttacked(attacker, 60 * 9, inst)
       attacker.components.talker:Say("触发 9 倍暴击！！！")

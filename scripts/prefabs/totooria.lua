@@ -50,10 +50,13 @@ local function GainOnLvup(inst) --升级自动加的属性
   local jiacheng = math.min(inst.dengji, max_jiacheng)
   local sanity_percent = inst.components.sanity:GetPercent()
   inst.components.sanity.max = math.ceil(200 + jiacheng * 10) --400
-  inst.components.sanity:SetPercent(sanity_percent)
+  -- 恢复 50% 精神
+  inst.components.sanity:SetPercent(math.min(1, sanity_percent + 0.5))
   inst.components.sanity.dapperness = TUNING.DAPPERNESS_HUGE / 18 * jiacheng
   -- 恢复 25% 生命
   inst.components.health:SetPercent(math.min(1, inst.components.health:GetPercent() + 0.25))
+  -- 恢复 5% 饥饿
+  inst.components.hunger.SetPercent(math.min(1, inst.components.hunger:GetPercent() + 0.05))
 end
 
 local MaxLevel = 2000
@@ -198,19 +201,9 @@ local function onkilledother(inst, data)
   local victim = data.victim
 
   if victim.components.lootdropper and (victim.components.freezable or victim:HasTag("monster")) then
-    if inst.xingyun > 2 then -- 幸运大于2，随机掉落 2-10 个金币
-      for _k = 1, math.random(2, 10) do
-        victim.components.lootdropper:SpawnLootPrefab("dubloon")
-      end
-    elseif inst.xingyun > 1 then
-      victim.components.lootdropper:SpawnLootPrefab("dubloon") -- 幸运大于1必定掉落1个金币
-      if math.random() <= (inst.xingyun - 1) then
-        victim.components.lootdropper:SpawnLootPrefab("dubloon")
-      end
-    else
-      if math.random() <= inst.xingyun then
-        victim.components.lootdropper:SpawnLootPrefab("dubloon")
-      end
+    -- 掉落 1-[幸运] 个金币
+    for k = 1, math.random(1, math.floor(inst.xingyun + 0.5)) do
+      victim.components.lootdropper:SpawnLootPrefab("dubloon")
     end
   end
 end
