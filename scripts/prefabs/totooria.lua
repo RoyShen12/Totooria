@@ -208,7 +208,7 @@ local function onkilledother(inst, data)
       end
     else
       -- 有几率掉落 1 个金币
-      if math.random() > inst.xingyun then
+      if math.random() < inst.xingyun then
         victim.components.lootdropper:SpawnLootPrefab("dubloon")
       end
     end

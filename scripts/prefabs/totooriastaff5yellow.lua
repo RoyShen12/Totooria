@@ -132,11 +132,11 @@ local function fn()
   inst.components.weapon:SetProjectile("ice_projectile")
   inst.components.weapon:SetOnAttack(onattack)
 
-  -- inst.AddComponent("armor")
-  -- inst.components.armor:InitCondition(100000, 0.25)
-  -- inst.components.armor.dontremove = true
-  -- inst.components.armor.onfinished = function ()
-  --   inst.components.armor:InitCondition(100000, 0.25)
+  -- inst.AddComponent("armor") -- 添加护甲
+  -- inst.components.armor:InitCondition(100000, 0.25) -- 10万耐久，25%减伤
+  -- inst.components.armor.dontremove = true -- 耐久耗尽不可损坏
+  -- inst.components.armor.onfinished = function () -- 耐久耗尽后
+  --   inst.components.armor:InitCondition(100000, 0.25) -- 又自动回满耐久
   -- end
 
   inst:AddComponent("inspectable")
