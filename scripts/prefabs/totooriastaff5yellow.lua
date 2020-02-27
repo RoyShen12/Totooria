@@ -132,6 +132,13 @@ local function fn()
   inst.components.weapon:SetProjectile("ice_projectile")
   inst.components.weapon:SetOnAttack(onattack)
 
+  -- inst.AddComponent("armor")
+  -- inst.components.armor:InitCondition(100000, 0.25)
+  -- inst.components.armor.dontremove = true
+  -- inst.components.armor.onfinished = function ()
+  --   inst.components.armor:InitCondition(100000, 0.25)
+  -- end
+
   inst:AddComponent("inspectable")
 
   inst:AddComponent("inventoryitem")
@@ -145,6 +152,7 @@ local function fn()
   light:SetColour(255 / 255, 255 / 255, 235 / 255)
   light:Enable(true)
   inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
+
   inst.components.inventoryitem:SetOnDroppedFn(OnDropped)
   inst.components.inventoryitem:SetOnPutInInventoryFn(OnPutInInventory)
 

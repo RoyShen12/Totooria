@@ -118,7 +118,7 @@ local function xidian(inst)
     inst.jinengdian = inst.dengji
     inst.xingyun = 0
     inst.gongjili = 0
-    inst.components.combat:AddDamageModifier("wendy", .075 * inst.gongjili)
+    inst.components.combat:AddDamageModifier("wendy", 0.075 * inst.gongjili)
     inst.xueliang = 0
     local health_percent = inst.components.health:GetPercent()
     inst.components.health.maxhealth = 75 + inst.xueliang * 125 / 20
