@@ -56,7 +56,7 @@ local function GainOnLvup(inst) --升级自动加的属性
   -- 恢复 25% 生命
   inst.components.health:SetPercent(math.min(1, inst.components.health:GetPercent() + 0.25))
   -- 恢复 5% 饥饿
-  inst.components.hunger.SetPercent(math.min(1, inst.components.hunger:GetPercent() + 0.05))
+  inst.components.hunger:SetPercent(math.min(1, inst.components.hunger:GetPercent() + 0.05))
 end
 
 local MaxLevel = 2000
