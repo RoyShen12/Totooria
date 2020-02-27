@@ -201,9 +201,16 @@ local function onkilledother(inst, data)
   local victim = data.victim
 
   if victim.components.lootdropper and (victim.components.freezable or victim:HasTag("monster")) then
-    -- 掉落 1-[幸运] 个金币
-    for k = 1, math.random(1, math.floor(inst.xingyun + 0.5)) do
-      victim.components.lootdropper:SpawnLootPrefab("dubloon")
+    if inst.xingyun >= 1 then
+      -- 掉落 1-[幸运] 个金币
+      for k = 1, math.random(1, math.floor(inst.xingyun + 0.5)) do
+        victim.components.lootdropper:SpawnLootPrefab("dubloon")
+      end
+    else
+      -- 有几率掉落 1 个金币
+      if math.random() > inst.xingyun then
+        victim.components.lootdropper:SpawnLootPrefab("dubloon")
+      end
     end
   end
 end
