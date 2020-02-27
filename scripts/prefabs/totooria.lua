@@ -192,8 +192,8 @@ local function xidian(inst)
 end
 
 local function onkilledother(inst, data)
-  --打怪升级，1级的几率是10%，最小不小于1%
-  if math.random() < math.max(0.1 / inst.dengji, 0.01) then
+  --打怪升级，1级的几率是20%，最小不小于1%
+  if math.random() < math.max(0.2 / inst.dengji, 0.01) then
     LevelUp(inst)
   end
 
@@ -216,12 +216,20 @@ local function onkilledother(inst, data)
 end
 
 local function oneat(inst, food)
-  if food and food.components.edible and food.prefab == "coral_brain" then --吃聪明豆必定升级
-    LevelUp(inst)
-  elseif food and food.components.edible and food.prefab == "dragoonheart" then --吃龙人心洗点，惩罚是降低5级
-    xidian(inst)
-  elseif math.random() < 0.1 / inst.dengji then --吃任何东西都有几率升级
-    LevelUp(inst)
+  if food and food.components.edible then
+
+    if food.prefab == "coral_brain" then -- 吃聪明豆必定升级
+      LevelUp(inst)
+    elseif food.prefab == "mandrakesoup" then -- 吃曼德拉草汤升5级
+      for k = 1, 5 do
+        LevelUp(inst)
+      end
+    elseif food.prefab == "dragoonheart" then -- 吃龙人心洗点，惩罚是降低5级
+      xidian(inst)
+    elseif math.random() < math.max(0.1 / inst.dengji, 0.001) then -- 吃任何东西都有几率升级
+      LevelUp(inst)
+    end
+
   end
 end
 
