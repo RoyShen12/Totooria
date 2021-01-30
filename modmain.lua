@@ -1,3 +1,12 @@
+setmetatable(
+  env,
+  {
+    __index = function(t, k)
+      return rawget(GLOBAL, k)
+    end
+  }
+)
+
 PrefabFiles = {
   "totooria",
   "totooriastaff1",
@@ -36,16 +45,9 @@ Assets = {
   Asset("IMAGE", "images/inventoryimages/totooriastaff5yellow.tex")
 }
 
-local require = GLOBAL.require
-local STRINGS = GLOBAL.STRINGS
-local Recipe = GLOBAL.Recipe
-local Ingredient = GLOBAL.Ingredient
-local RECIPETABS = GLOBAL.RECIPETABS
-local GetPlayer = GLOBAL.GetPlayer
-
 local LAN_ = GetModConfigData("Language")
 
-GLOBAL.TUNING.TOTOORIA = {}
+TUNING.TOTOORIA = {}
 if LAN_ then
   require "strings_ttr_c"
 else
@@ -159,7 +161,7 @@ local function totooriastab(inst)
   )
   Recipe("book_sleep", {Ingredient("papyrus", 2), Ingredient("nightmarefuel", 2)}, ttrstab, {MAGIC = 0})
   Recipe("book_brimstone", {Ingredient("papyrus", 2), Ingredient("redgem", 1)}, ttrstab, {MAGIC = 0})
-  if GLOBAL.IsDLCEnabled(GLOBAL.CAPY_DLC) then
+  if IsDLCEnabled(CAPY_DLC) then
     Recipe("book_meteor", {Ingredient("papyrus", 2), Ingredient("obsidian", 2)}, ttrstab, {MAGIC = 0})
   else
     Recipe("book_tentacles", {Ingredient("papyrus", 2), Ingredient("tentaclespots", 1)}, ttrstab, {MAGIC = 0})
@@ -277,7 +279,7 @@ local function RecheckForThreat(inst) --让蝴蝶、鸟等不会逃离
   local busy = inst.sg:HasStateTag("sleeping") or inst.sg:HasStateTag("busy") or inst.sg:HasStateTag("flying")
   if not busy then
     local threat =
-      GLOBAL.FindEntity(inst, 5, nil, nil, {"notarget", "teji_youshan"}, {"player", "monster", "scarytoprey"})
+      FindEntity(inst, 5, nil, nil, {"notarget", "teji_youshan"}, {"player", "monster", "scarytoprey"})
     return threat ~= nil
   end
 end
@@ -331,7 +333,7 @@ end
 --STRINGS.CHARACTERS.TOTOORIA = require "speech_walani"
 
 -- Let the game know character is male, female, or robot
-table.insert(GLOBAL.CHARACTER_GENDERS.FEMALE, "totooria")
+table.insert(CHARACTER_GENDERS.FEMALE, "totooria")
 
 AddMinimapAtlas("images/map_icons/totooria.xml")
 AddModCharacter("totooria")

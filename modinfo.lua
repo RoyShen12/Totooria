@@ -15,8 +15,8 @@ forumthread = ""
 
 api_version = 6
 
-dont_starve_compatible = false
-reign_of_giants_compatible = false
+dont_starve_compatible = true
+reign_of_giants_compatible = true
 dst_compatible = false
 shipwrecked_compatible = true
 

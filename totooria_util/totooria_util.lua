@@ -1,8 +1,6 @@
-local GetPlayer = GLOBAL.GetPlayer
-local TheInput = GLOBAL.TheInput
-local ttrstrs = GLOBAL.STRINGS.TTRSTRINGS
+local ttrstrs = STRINGS.TTRSTRINGS
 
-local KEY_J = GLOBAL.KEY_J
+local KEY_J = KEY_J
 local J = function(player)
 	if not player:HasTag("playerghost") and player.prefab == "totooria" then
 		if player.jinengdian == 0 then
@@ -44,7 +42,7 @@ local J = function(player)
 	end
 end
 
-local KEY_UP = GLOBAL.KEY_UP
+local KEY_UP = KEY_UP
 local UP = function(player)
 	if not player:HasTag("playerghost") and player.prefab == "totooria" then
 		if player.jinengdian > 0 then
@@ -57,7 +55,7 @@ local UP = function(player)
 	end
 end
 
-local KEY_DOWN = GLOBAL.KEY_DOWN
+local KEY_DOWN = KEY_DOWN
 local DOWN = function(player)
 	if not player:HasTag("playerghost") and player.prefab == "totooria" then
 		if player.jinengdian > 0 then
@@ -72,7 +70,7 @@ local DOWN = function(player)
 	end
 end
 
-local KEY_LEFT = GLOBAL.KEY_LEFT
+local KEY_LEFT = KEY_LEFT
 local LEFT = function(player)
 	if not player:HasTag("playerghost") and player.prefab == "totooria" then
 		if player.jinengdian > 0 then
@@ -86,7 +84,7 @@ local LEFT = function(player)
 	end
 end
 
-local KEY_RIGHT = GLOBAL.KEY_RIGHT
+local KEY_RIGHT = KEY_RIGHT
 local RIGHT = function(player)
 	if not player:HasTag("playerghost") and player.prefab == "totooria" then
 		if player.jinengdian > 0 then
@@ -102,7 +100,7 @@ local RIGHT = function(player)
 	end
 end
 
-local KEY_K = GLOBAL.KEY_K
+local KEY_K = KEY_K
 local K = function(player)
 	if not player:HasTag("playerghost") and player.prefab == "totooria" then
 		player.components.talker:Say(
