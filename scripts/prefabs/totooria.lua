@@ -52,7 +52,7 @@ local function GainOnLvup(inst) --升级自动加的属性
   inst.components.sanity.max = math.ceil(200 + jiacheng * 10) --400
   -- 恢复 50% 精神
   inst.components.sanity:SetPercent(math.min(1, sanity_percent + 0.5))
-  inst.components.sanity.dapperness = GLOBAL.TUNING.DAPPERNESS_HUGE / 18 * jiacheng
+  inst.components.sanity.dapperness = TUNING.DAPPERNESS_HUGE / 18 * jiacheng
   -- 恢复 25% 生命
   inst.components.health:SetPercent(math.min(1, inst.components.health:GetPercent() + 0.25))
   -- 恢复 5% 饥饿
@@ -316,7 +316,7 @@ local function onsave(inst, data)
 end
 
 local master_postinit = function(inst)
-  inst.soundsname = GLOBAL.TUNING.ttrsound
+  inst.soundsname = TUNING.ttrsound
 
   inst.MiniMapEntity:SetIcon("totooria.tex")
   inst.dengji = 0
@@ -339,7 +339,7 @@ local master_postinit = function(inst)
   inst.components.combat:AddDamageModifier("wilson", -0.25)
 
   -- Hunger rate (optional)
-  inst.components.hunger.hungerrate = 1.1 * GLOBAL.TUNING.WILSON_HUNGER_RATE
+  inst.components.hunger.hungerrate = 1.1 * TUNING.WILSON_HUNGER_RATE
 
   -- Movement speed (optional)
   inst.components.locomotor.walkspeed = 4
