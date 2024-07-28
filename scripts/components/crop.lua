@@ -14,9 +14,9 @@ local Crop =
     self.protected = false
 
     if SaveGameIndex:GetCurrentMode() == "volcano" or SaveGameIndex:GetCurrentMode() == "shipwrecked" then
-      self.wither_temp = math.random(TUNING.SW_MIN_PLANT_WITHER_TEMP, TUNING.SW_MAX_PLANT_WITHER_TEMP)
+      self.wither_temp = math.random(GLOBAL.TUNING.SW_MIN_PLANT_WITHER_TEMP, GLOBAL.TUNING.SW_MAX_PLANT_WITHER_TEMP)
     else
-      self.wither_temp = math.random(TUNING.MIN_PLANT_WITHER_TEMP, TUNING.MAX_PLANT_WITHER_TEMP)
+      self.wither_temp = math.random(GLOBAL.TUNING.MIN_PLANT_WITHER_TEMP, GLOBAL.TUNING.MAX_PLANT_WITHER_TEMP)
     end
 
     self.inst:ListenForEvent(
@@ -128,20 +128,20 @@ function Crop:DoGrow(dt)
 
     local weather_rate = 1
 
-    if season:GetTemperature() < TUNING.MIN_CROP_GROW_TEMP then
+    if season:GetTemperature() < GLOBAL.TUNING.MIN_CROP_GROW_TEMP then
       weather_rate = 0
     else
-      --if season:GetTemperature() > TUNING.CROP_BONUS_TEMP then
-      --  weather_rate = weather_rate + TUNING.CROP_HEAT_BONUS
+      --if season:GetTemperature() > GLOBAL.TUNING.CROP_BONUS_TEMP then
+      --  weather_rate = weather_rate + GLOBAL.TUNING.CROP_HEAT_BONUS
       --end
       if season:IsRaining() then
-        weather_rate = weather_rate + TUNING.CROP_RAIN_BONUS * season:GetPrecipitationRate()
+        weather_rate = weather_rate + GLOBAL.TUNING.CROP_RAIN_BONUS * season:GetPrecipitationRate()
       elseif season:IsSpring() or season:IsGreenSeason() then
-        weather_rate = weather_rate + (TUNING.SPRING_GROWTH_MODIFIER / 3)
+        weather_rate = weather_rate + (GLOBAL.TUNING.SPRING_GROWTH_MODIFIER / 3)
       end
     end
 
-    local in_light = TheSim:GetLightAtPoint(self.inst.Transform:GetWorldPosition()) > TUNING.DARK_CUTOFF
+    local in_light = TheSim:GetLightAtPoint(self.inst.Transform:GetWorldPosition()) > GLOBAL.TUNING.DARK_CUTOFF
     if in_light then
       self.growthpercent = self.growthpercent + dt * self.rate * weather_rate
     end

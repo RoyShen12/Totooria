@@ -12,18 +12,18 @@ local function turnon(inst)
     inst.SoundEmitter:PlaySound("dontstarve/wilson/torch_LP", "torch")
   end
   inst.SoundEmitter:PlaySound("dontstarve/wilson/torch_swing")
-  TUNING.lightabc = 1
+  GLOBAL.TUNING.lightabc = 1
 end
 
 local function turnoff(inst)
   inst.Light:Enable(false)
   inst.SoundEmitter:KillSound("torch")
   inst.SoundEmitter:PlaySound("dontstarve/common/fireOut")
-  TUNING.lightabc = 0
+  GLOBAL.TUNING.lightabc = 0
 end
 
 local function OnDropped(inst)
-  if TUNING.lightabc == 1 then
+  if GLOBAL.TUNING.lightabc == 1 then
     inst.Light:Enable(true)
   else
     inst.Light:Enable(false)
@@ -31,7 +31,7 @@ local function OnDropped(inst)
 end
 
 local function OnPutInInventory(inst)
-  if TUNING.lightabc == 1 then
+  if GLOBAL.TUNING.lightabc == 1 then
     inst.Light:Enable(true)
   else
     inst.Light:Enable(false)
@@ -69,7 +69,7 @@ local function onattack(inst, attacker, target)
   end
 
   if target.sg ~= nil and not target.sg:HasStateTag("frozen") then
-    target:PushEvent("attacked", {attacker = attacker, damage = 0})
+    target:PushEvent("attacked", { attacker = attacker, damage = 0 })
   end
 
   -- 实际暴击率 = 5% + 幸运百分数/500。50%幸运=15%暴击；400%幸运=85%暴击; >475%幸运=满暴击；满暴击后击中恢复溢出暴击等值生命
@@ -93,7 +93,7 @@ local function onattack(inst, attacker, target)
 end
 
 local function fn()
-  TUNING.lightabc = 1
+  GLOBAL.TUNING.lightabc = 1
   local inst = CreateEntity()
   local trans = inst.entity:AddTransform()
   local anim = inst.entity:AddAnimState()
@@ -110,13 +110,13 @@ local function fn()
   inst:AddComponent("tool")
   inst.components.tool:SetAction(ACTIONS.CHOP, 2.5)
   inst.components.tool:SetAction(ACTIONS.MINE, 2)
-  if TUNING.canhammer == 1 then
+  if GLOBAL.TUNING.canhammer == 1 then
     inst.components.tool:SetAction(ACTIONS.HAMMER, 15)
   end
-  if TUNING.canhack == 1 then
+  if GLOBAL.TUNING.canhack == 1 then
     inst.components.tool:SetAction(ACTIONS.HACK, 2)
   end
-  if TUNING.candig == 1 then
+  if GLOBAL.TUNING.candig == 1 then
     inst.components.tool:SetAction(ACTIONS.DIG, 2)
   end
 
@@ -165,8 +165,8 @@ local function fn()
   inst.components.equippable.toggledofffn = turnoff
 
   --加速
-  inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT * 1.25
-  inst.components.equippable.dapperness = TUNING.CRAZINESS_MED / 4 * 3
+  inst.components.equippable.walkspeedmult = GLOBAL.TUNING.CANE_SPEED_MULT * 1.25
+  inst.components.equippable.dapperness = GLOBAL.TUNING.CRAZINESS_MED / 4 * 3
 
   return inst
 end

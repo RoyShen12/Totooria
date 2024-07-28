@@ -53,7 +53,7 @@ local function dostew(inst)
       (cooking.recipes and cooking.recipes[cooker] and cooking.recipes[cooker][stewercmp.product] and
       cooking.recipes[cooker][stewercmp.product].perishtime) and
       cooking.recipes[cooker][stewercmp.product].perishtime or
-      TUNING.PERISH_SUPERFAST
+      GLOBAL.TUNING.PERISH_SUPERFAST
     local prod_spoil = stewercmp.product_spoilage or 1
     stewercmp.spoiltime = prep_perishtime * prod_spoil
     stewercmp.spoiltargettime = GetTime() + stewercmp.spoiltime
@@ -135,7 +135,7 @@ function Stewer:StartCooking()
         self.productcooker = cooker
       end
 
-      local grow_time = TUNING.BASE_COOK_TIME * cooktime
+      local grow_time = GLOBAL.TUNING.BASE_COOK_TIME * cooktime
       self.targettime = GetTime() + grow_time
       self.task = self.inst:DoTaskInTime(grow_time, dostew, "stew")
 

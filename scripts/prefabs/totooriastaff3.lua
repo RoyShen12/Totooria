@@ -49,13 +49,13 @@ local function fn()
   inst:AddComponent("tool")
   inst.components.tool:SetAction(ACTIONS.CHOP, 2.5)
   inst.components.tool:SetAction(ACTIONS.MINE, 2)
-  if TUNING.canhammer == 1 then
+  if GLOBAL.TUNING.canhammer == 1 then
     inst.components.tool:SetAction(ACTIONS.HAMMER, 15)
   end
-  if TUNING.canhack == 1 then
+  if GLOBAL.TUNING.canhack == 1 then
     inst.components.tool:SetAction(ACTIONS.HACK, 2)
   end
-  if TUNING.candig == 1 then
+  if GLOBAL.TUNING.candig == 1 then
     inst.components.tool:SetAction(ACTIONS.DIG, 2)
   end
 
@@ -75,8 +75,8 @@ local function fn()
   inst.components.equippable:SetOnEquip(onequip)
   inst.components.equippable:SetOnUnequip(onunequip)
   --加速
-  inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT * 1
-  inst.components.equippable.dapperness = TUNING.CRAZINESS_MED / 4
+  inst.components.equippable.walkspeedmult = GLOBAL.TUNING.CANE_SPEED_MULT * 1
+  inst.components.equippable.dapperness = GLOBAL.TUNING.CRAZINESS_MED / 4
 
   return inst
 end

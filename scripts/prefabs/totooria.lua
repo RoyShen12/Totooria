@@ -52,7 +52,7 @@ local function GainOnLvup(inst) --升级自动加的属性
   inst.components.sanity.max = math.ceil(200 + jiacheng * 10) --400
   -- 恢复 50% 精神
   inst.components.sanity:SetPercent(math.min(1, sanity_percent + 0.5))
-  inst.components.sanity.dapperness = TUNING.DAPPERNESS_HUGE / 18 * jiacheng
+  inst.components.sanity.dapperness = GLOBAL.TUNING.DAPPERNESS_HUGE / 18 * jiacheng
   -- 恢复 25% 生命
   inst.components.health:SetPercent(math.min(1, inst.components.health:GetPercent() + 0.25))
   -- 恢复 5% 饥饿
@@ -130,20 +130,20 @@ local function xidian(inst)
       inst:RemoveTag("teji_qiaoshou")
       inst.components.talker:Say(
         ttrstrs[10] ..
-          "\n" ..
-            ttrstrs[11] ..
-              "\n" ..
-                ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
+        "\n" ..
+        ttrstrs[11] ..
+        "\n" ..
+        ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
       )
     else
       if inst.dengji >= 5 and inst.dengji < 10 then
         inst:RemoveTag("teji_dachu")
         inst.components.talker:Say(
           ttrstrs[10] ..
-            "\n" ..
-              ttrstrs[12] ..
-                "\n" ..
-                  ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
+          "\n" ..
+          ttrstrs[12] ..
+          "\n" ..
+          ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
         )
       else
         if inst.dengji >= 0 and inst.dengji < 5 then
@@ -151,27 +151,27 @@ local function xidian(inst)
           inst:AddTag("scarytoprey")
           inst.components.talker:Say(
             ttrstrs[10] ..
-              "\n" ..
-                ttrstrs[13] ..
-                  "\n" ..
-                    ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
+            "\n" ..
+            ttrstrs[13] ..
+            "\n" ..
+            ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
           )
         else
           if inst.dengji == 15 then
             inst:RemoveTag("teji_xuezhe")
             inst.components.talker:Say(
               ttrstrs[10] ..
-                "\n" ..
-                  ttrstrs[14] ..
-                    "\n" ..
-                      ttrstrs[15] ..
-                        (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
+              "\n" ..
+              ttrstrs[14] ..
+              "\n" ..
+              ttrstrs[15] ..
+              (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
             )
           else
             inst.components.talker:Say(
               ttrstrs[10] ..
-                "\n" ..
-                  ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
+              "\n" ..
+              ttrstrs[15] .. (inst.dengji) .. ttrstrs[16] .. (inst.jinengdian) .. ttrstrs[7] .. "\n" .. ttrstrs[8]
             )
           end
         end
@@ -217,19 +217,17 @@ end
 
 local function oneat(inst, food)
   if food and food.components.edible then
-
-    if food.prefab == "coral_brain" then -- 吃聪明豆必定升级
+    if food.prefab == "coral_brain" then      -- 吃聪明豆必定升级
       LevelUp(inst)
     elseif food.prefab == "mandrakesoup" then -- 吃曼德拉草汤升5级
       for k = 1, 5 do
         LevelUp(inst)
       end
-    elseif food.prefab == "dragoonheart" then -- 吃龙人心洗点，惩罚是降低5级
+    elseif food.prefab == "dragoonheart" then                      -- 吃龙人心洗点，惩罚是降低5级
       xidian(inst)
     elseif math.random() < math.max(0.1 / inst.dengji, 0.001) then -- 吃任何东西都有几率升级
       LevelUp(inst)
     end
-
   end
 end
 
@@ -318,7 +316,7 @@ local function onsave(inst, data)
 end
 
 local master_postinit = function(inst)
-  inst.soundsname = TUNING.ttrsound
+  inst.soundsname = GLOBAL.TUNING.ttrsound
 
   inst.MiniMapEntity:SetIcon("totooria.tex")
   inst.dengji = 0
@@ -341,7 +339,7 @@ local master_postinit = function(inst)
   inst.components.combat:AddDamageModifier("wilson", -0.25)
 
   -- Hunger rate (optional)
-  inst.components.hunger.hungerrate = 1.1 * TUNING.WILSON_HUNGER_RATE
+  inst.components.hunger.hungerrate = 1.1 * GLOBAL.TUNING.WILSON_HUNGER_RATE
 
   -- Movement speed (optional)
   inst.components.locomotor.walkspeed = 4

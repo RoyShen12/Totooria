@@ -18,12 +18,12 @@ local function onequip(inst, owner)
     end
     owner:ListenForEvent("wind_rampup", owner.ramp_fn, GetWorld())
     owner.sail_stick_update =
-      owner:DoPeriodicTask(
-      FRAMES,
-      function()
-        GetWorld().components.worldwind:SetOverrideAngle(GetPlayer().Transform:GetRotation())
-      end
-    )
+        owner:DoPeriodicTask(
+          FRAMES,
+          function()
+            GetWorld().components.worldwind:SetOverrideAngle(GetPlayer().Transform:GetRotation())
+          end
+        )
   end
 end
 
@@ -63,7 +63,7 @@ local function onattack(inst, attacker, target)
   end
 
   if target.sg ~= nil and not target.sg:HasStateTag("frozen") then
-    target:PushEvent("attacked", {attacker = attacker, damage = 0})
+    target:PushEvent("attacked", { attacker = attacker, damage = 0 })
   end
 
   -- 实际暴击率 = 5% + 幸运百分数/500。50%幸运=15%暴击；400%幸运=85%暴击; >475%幸运=满暴击；满暴击后击中恢复溢出暴击等值生命
@@ -103,13 +103,13 @@ local function fn()
   inst:AddComponent("tool")
   inst.components.tool:SetAction(ACTIONS.CHOP, 2.5)
   inst.components.tool:SetAction(ACTIONS.MINE, 2)
-  if TUNING.canhammer == 1 then
+  if GLOBAL.TUNING.canhammer == 1 then
     inst.components.tool:SetAction(ACTIONS.HAMMER, 15)
   end
-  if TUNING.canhack == 1 then
+  if GLOBAL.TUNING.canhack == 1 then
     inst.components.tool:SetAction(ACTIONS.HACK, 2)
   end
-  if TUNING.candig == 1 then
+  if GLOBAL.TUNING.candig == 1 then
     inst.components.tool:SetAction(ACTIONS.DIG, 2)
   end
 
@@ -136,8 +136,8 @@ local function fn()
   inst.components.equippable:SetOnEquip(onequip)
   inst.components.equippable:SetOnUnequip(onunequip)
   --加速
-  inst.components.equippable.walkspeedmult = TUNING.CANE_SPEED_MULT * 1.45
-  inst.components.equippable.dapperness = TUNING.CRAZINESS_MED / 4 * 3
+  inst.components.equippable.walkspeedmult = GLOBAL.TUNING.CANE_SPEED_MULT * 1.45
+  inst.components.equippable.dapperness = GLOBAL.TUNING.CRAZINESS_MED / 4 * 3
 
   return inst
 end
